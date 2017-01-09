@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Api.cs" />
     <Compile Include="Api.Endpoints.cs" />
+    <Compile Include="Filters.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\Concept.cs" />
     <Compile Include="Models\Episode.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="Models\Power.cs" />
     <Compile Include="Models\Promo.cs" />
     <Compile Include="Models\Publisher.cs" />
-    <Compile Include="Models\Result.cs" />
+    <Compile Include="Result.cs" />
     <Compile Include="Models\Series.cs" />
     <Compile Include="Models\StoryArc.cs" />
     <Compile Include="Models\Team.cs" />
@@ -78,9 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Models\Checklist.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
