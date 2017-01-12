@@ -22,10 +22,10 @@ namespace ComicVine.Models
         public List<Concept> Concepts { get; set; }
 
         [JsonProperty("date_added")]
-        public DateTime DateAdded { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("date_last_updated")]
-        public DateTime DateLastUpdated { get; set; }
+        public DateTime? Modified { get; set; }
 
         [JsonProperty("deck")]
         public string Deck { get; set; }
@@ -61,7 +61,7 @@ namespace ComicVine.Models
         public string Rating { get; set; }
 
         [JsonProperty("release_date")]
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         [JsonProperty("runtime")]
         public string Runtime { get; set; }
@@ -80,5 +80,10 @@ namespace ComicVine.Models
 
         [JsonProperty("writers")]
         public List<Person> Writers { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

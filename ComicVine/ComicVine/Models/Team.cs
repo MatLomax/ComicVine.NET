@@ -28,10 +28,10 @@ namespace ComicVine.Models
         public int CountOfTeamMembers { get; set; }
 
         [JsonProperty("date_added")]
-        public DateTime DateAdded { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("date_last_updated")]
-        public DateTime DateLastUpdated { get; set; }
+        public DateTime? Modified { get; set; }
 
         [JsonProperty("deck")]
         public string Deck { get; set; }
@@ -74,5 +74,10 @@ namespace ComicVine.Models
 
         [JsonProperty("volume_credits")]
         public List<Volume> VolumeCredits { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

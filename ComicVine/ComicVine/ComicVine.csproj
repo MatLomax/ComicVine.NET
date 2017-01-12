@@ -54,7 +54,10 @@
     <Compile Include="Filters.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\Concept.cs" />
+    <Compile Include="Models\DateObject.cs" />
+    <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Episode.cs" />
+    <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Issue.cs" />
     <Compile Include="Models\Location.cs" />

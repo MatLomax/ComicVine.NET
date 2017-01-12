@@ -4,8 +4,12 @@ using Newtonsoft.Json;
 
 namespace ComicVine.Models
 {
-    public class Issue
+    public class Issue : Entity
     {
+        public new static string SingleEndpoint => "issue";
+        public new static string ListEndpoint => "issues";
+        public new static string EndpointId => "4000";
+
         [JsonProperty("aliases")]
         public string Aliases { get; set; }
 
@@ -22,13 +26,13 @@ namespace ComicVine.Models
         public List<Concept> ConceptCredits { get; set; }
 
         [JsonProperty("cover_date")]
-        public DateTime CoverDate { get; set; }
+        public DateTime? CoverDate { get; set; }
 
         [JsonProperty("date_added")]
-        public DateTime DateAdded { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("date_last_updated")]
-        public DateTime DateLastUpdated { get; set; }
+        public DateTime? Modified { get; set; }
 
         [JsonProperty("deck")]
         public string Deck { get; set; }
@@ -57,9 +61,6 @@ namespace ComicVine.Models
         [JsonProperty("has_staff_review")]
         public bool HasStaffReview { get; set; }
 
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
         [JsonProperty("image")]
         public Image Image { get; set; }
 
@@ -82,7 +83,7 @@ namespace ComicVine.Models
         public string SiteDetailUrl { get; set; }
 
         [JsonProperty("store_date")]
-        public DateTime StoreDate { get; set; }
+        public DateTime? StoreDate { get; set; }
 
         [JsonProperty("story_arc_credits")]
         public List<StoryArc> StoryArcCredits { get; set; }
@@ -95,5 +96,10 @@ namespace ComicVine.Models
 
         [JsonProperty("volume")]
         public Volume Volume { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

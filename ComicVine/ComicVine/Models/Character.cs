@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 
 namespace ComicVine.Models
 {
-    public class Character
+    public class Character : Entity
     {
+        public new static string SingleEndpoint => "character";
+        public new static string ListEndpoint => "characters";
+        public new static string EndpointId => "4005";
+
         [JsonProperty("aliases")]
         public string Aliases { get; set; }
 
@@ -13,7 +18,7 @@ namespace ComicVine.Models
         public string ApiDetailUrl { get; set; }
 
         [JsonProperty("birth")]
-        public DateTime Birth { get; set; }
+        public DateTime? Birth { get; set; }
 
         [JsonProperty("character_enemies")]
         public List<Character> CharacterEnemies { get; set; }
@@ -28,10 +33,10 @@ namespace ComicVine.Models
         public List<Person> Creators { get; set; }
 
         [JsonProperty("date_added")]
-        public DateTime DateAdded { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("date_last_updated")]
-        public DateTime DateLastUpdated { get; set; }
+        public DateTime? Modified { get; set; }
 
         [JsonProperty("deck")]
         public string Deck { get; set; }
@@ -43,10 +48,17 @@ namespace ComicVine.Models
         public Issue FirstAppearedInIssue { get; set; }
 
         [JsonProperty("gender")]
-        public int Gender { get; set; }
+        public int GenderValue { get; set; }
 
-        [JsonProperty("id")]
-        public int Id { get; set; }
+        public Gender Gender
+        {
+            get
+            {
+                Gender value;
+                Enum.TryParse(this.GenderValue.ToString(), out value);
+                return value == default(Gender) ? Gender.Unknown : value;
+            }
+        }
 
         [JsonProperty("image")]
         public Image Image { get; set; }
@@ -92,5 +104,10 @@ namespace ComicVine.Models
 
         [JsonProperty("volume_credits")]
         public List<Volume> VolumeCredits { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

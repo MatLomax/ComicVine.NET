@@ -13,10 +13,10 @@ namespace ComicVine.Models
         public string ApiDetailUrl { get; set; }
 
         [JsonProperty("birth")]
-        public DateTime Birth { get; set; }
+        public DateTime? Birth { get; set; }
 
         [JsonProperty("count_of_isssue_appearances")]
-        public int CountOfIssueAppearances { get; set; }
+        public int? CountOfIssueAppearances { get; set; }
 
         [JsonProperty("country")]
         public string Country { get; set; }
@@ -25,13 +25,13 @@ namespace ComicVine.Models
         public List<Character> CreatedCharacters { get; set; }
 
         [JsonProperty("date_added")]
-        public DateTime DateAdded { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("date_last_updated")]
-        public DateTime DateLastUpdated { get; set; }
+        public DateTime? Modified { get; set; }
 
         [JsonProperty("death")]
-        public DateTime Death { get; set; }
+        public DateTime? Death { get; set; }
 
         [JsonProperty("deck")]
         public string Deck { get; set; }
@@ -71,5 +71,10 @@ namespace ComicVine.Models
 
         [JsonProperty("website")]
         public string Website { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

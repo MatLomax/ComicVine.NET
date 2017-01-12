@@ -22,10 +22,10 @@ namespace ComicVine.Models
         public int CountOfIssues { get; set; }
 
         [JsonProperty("date_added")]
-        public DateTime Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("date_last_updated")]
-        public DateTime Modified { get; set; }
+        public DateTime? Modified { get; set; }
 
         [JsonProperty("deck")]
         public string Deck { get; set; }
@@ -68,5 +68,10 @@ namespace ComicVine.Models
 
         [JsonProperty("start_year")]
         public string StartYear { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace ComicVine.Models
     public class Episode
     {
         [JsonProperty("air_date")]
-        public DateTime AirDate { get; set; }
+        public DateTime? AirDate { get; set; }
 
         [JsonProperty("aliases")]
         public string Aliases { get; set; }
@@ -25,10 +25,10 @@ namespace ComicVine.Models
         public List<Concept> ConceptCredits { get; set; }
 
         [JsonProperty("date_added")]
-        public DateTime DateAdded { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("date_last_updated")]
-        public DateTime DateLastUpdated { get; set; }
+        public DateTime? Modified { get; set; }
 
         [JsonProperty("deck")]
         public string Deck { get; set; }
@@ -86,5 +86,10 @@ namespace ComicVine.Models
 
         [JsonProperty("team_credits")]
         public List<Team> TeamCredits { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

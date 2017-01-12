@@ -9,7 +9,7 @@ namespace ComicVine.Models
         public string ApiDetailUrl { get; set; }
 
         [JsonProperty("date_added")]
-        public DateTime DateAdded { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("deck")]
         public string Deck { get; set; }
@@ -31,5 +31,10 @@ namespace ComicVine.Models
 
         [JsonProperty("user")]
         public string User { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

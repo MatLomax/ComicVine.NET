@@ -25,5 +25,10 @@ namespace ComicVine.Models
 
         [JsonProperty("site_detail_url")]
         public string SiteDetailUrl { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

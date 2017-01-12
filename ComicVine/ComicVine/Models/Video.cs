@@ -30,7 +30,7 @@ namespace ComicVine.Models
         public string Name { get; set; }
 
         [JsonProperty("publish_date")]
-        public DateTime PublishDate { get; set; }
+        public DateTime? PublishDate { get; set; }
 
         [JsonProperty("site_detail_url")]
         public string SiteDetailUrl { get; set; }
@@ -49,5 +49,10 @@ namespace ComicVine.Models
 
         [JsonProperty("youtube_id")]
         public string YoutubeId { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

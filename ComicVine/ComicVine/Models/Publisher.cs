@@ -17,10 +17,10 @@ namespace ComicVine.Models
         public List<Character> Characters { get; set; }
 
         [JsonProperty("date_added")]
-        public DateTime DateAdded { get; set; }
+        public DateTime? Created { get; set; }
 
         [JsonProperty("date_last_updated")]
-        public DateTime DateLastUpdated { get; set; }
+        public DateTime? Modified { get; set; }
 
         [JsonProperty("deck")]
         public string Deck { get; set; }
@@ -57,5 +57,10 @@ namespace ComicVine.Models
 
         [JsonProperty("volumes")]
         public List<Volume> Volumes { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

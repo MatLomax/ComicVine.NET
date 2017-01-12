@@ -1,10 +1,5 @@
 ﻿namespace ComicVine
 {
-    public class SimpleResult
-    {
-        public string Error { get; set; }
-    }
-
     public class Result<T>
     {
         public string Error { get; set; }
