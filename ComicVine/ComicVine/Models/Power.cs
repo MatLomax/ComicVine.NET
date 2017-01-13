@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ComicVine.Models
 {
-    public class Power : Entity
+    public class Power : NamedEntity
     {
         public new static string SingleEndpoint => "power";
         public new static string ListEndpoint => "powers";
@@ -28,15 +28,7 @@ namespace ComicVine.Models
         [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
         [JsonProperty("site_detail_url")]
         public string SiteDetailUrl { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ComicVine.Models
 {
-    public class Issue : Entity
+    public class Issue : NamedEntity
     {
         public new static string SingleEndpoint => "issue";
         public new static string ListEndpoint => "issues";
@@ -70,9 +70,6 @@ namespace ComicVine.Models
         [JsonProperty("location_credits")]
         public List<Location> LocationCredits { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
         [JsonProperty("object_credits")]
         public List<Object> ObjectCredits { get; set; }
 
@@ -96,10 +93,5 @@ namespace ComicVine.Models
 
         [JsonProperty("volume")]
         public Volume Volume { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }

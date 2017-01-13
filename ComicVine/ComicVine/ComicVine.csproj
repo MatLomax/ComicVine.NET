@@ -50,11 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api.cs" />
-    <Compile Include="Api.Endpoints.cs" />
     <Compile Include="Filters.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\Concept.cs" />
     <Compile Include="Models\DateObject.cs" />
+    <Compile Include="Models\NamedEntity.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Episode.cs" />
     <Compile Include="Models\Gender.cs" />

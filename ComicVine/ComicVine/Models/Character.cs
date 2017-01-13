@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 
 namespace ComicVine.Models
 {
-    public class Character : Entity
+    public class Character : NamedEntity
     {
         public new static string SingleEndpoint => "character";
         public new static string ListEndpoint => "characters";
@@ -72,9 +71,6 @@ namespace ComicVine.Models
         [JsonProperty("movies")]
         public List<Movie> Movies { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
         [JsonProperty("origin")]
         public Origin Origin { get; set; }
 
@@ -104,10 +100,5 @@ namespace ComicVine.Models
 
         [JsonProperty("volume_credits")]
         public List<Volume> VolumeCredits { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }

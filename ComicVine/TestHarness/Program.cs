@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using ComicVine;
 using ComicVine.Models;
 
 namespace TestHarness
@@ -19,7 +17,7 @@ namespace TestHarness
             //    Limit = 3
             //});
 
-            var character = api.Get<Character>("character", 1253, null, "");
+            //var character = api.FetchSingle<Character>("character", 1253, null, new[] { "FirstAppearedInIssue" });
             //var volumes = api.GetVolumeList(new ComicVine.Filters { FieldList = "name,count_of_issues,publisher", Filter = "name:Quiver"});
             //var power = api.GetPower(51);
             //var storyArc = api.GetStoryArc(5);
@@ -37,6 +35,22 @@ namespace TestHarness
             //var searchObjects = api.GetObjectList(new Filters {Filter = "name:Infinity Gauntlet"});
 
             //var power = api.Get<Power>("power", 51, new Filters(), "a");
+
+            //var storyArcs = api.Get<StoryArc>(new Filters
+            //{
+            //    Filter = "name:Civil War",
+            //    FieldList = "id,name",
+            //    Limit = 15
+            //});
+
+            var storyArc = api.Get<StoryArc>(58879);
+
+
+            //var civilWar = api.Get<StoryArc>("Civil War II", null, new [] { "Publisher" });
+
+
+            //var marvel = api.Get<Publisher>("Dark Horse", new Filters { FieldList = "id,characters" });
+
 
             Console.ReadLine();
         }

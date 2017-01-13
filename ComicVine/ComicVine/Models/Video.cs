@@ -3,8 +3,12 @@ using Newtonsoft.Json;
 
 namespace ComicVine.Models
 {
-    public class Video
+    public class Video : NamedEntity
     {
+        public new static string SingleEndpoint => "video";
+        public new static string ListEndpoint => "videos";
+        public new static string EndpointId => "2300";
+
         [JsonProperty("api_detail_url")]
         public string ApiDetailUrl { get; set; }
 
@@ -19,16 +23,10 @@ namespace ComicVine.Models
 
         [JsonProperty("embed_player")]
         public string EmbedPlayer { get; set; }
-
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
+        
         [JsonProperty("length_seconds")]
         public int LengthSeconds { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
+        
         [JsonProperty("publish_date")]
         public DateTime? PublishDate { get; set; }
 
@@ -49,10 +47,5 @@ namespace ComicVine.Models
 
         [JsonProperty("youtube_id")]
         public string YoutubeId { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }

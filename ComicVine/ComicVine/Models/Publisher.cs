@@ -4,8 +4,11 @@ using Newtonsoft.Json;
 
 namespace ComicVine.Models
 {
-    public class Publisher
+    public class Publisher : NamedEntity
     {
+        public new static string SingleEndpoint => "publisher";
+        public new static string ListEndpoint => "publishers";
+        public new static string EndpointId => "4010";
 
         [JsonProperty("aliases")]
         public string Aliases { get; set; }
@@ -28,9 +31,6 @@ namespace ComicVine.Models
         [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
         [JsonProperty("image")]
         public Image Image { get; set; }
 
@@ -43,9 +43,6 @@ namespace ComicVine.Models
         [JsonProperty("location_state")]
         public string LocationState { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
         [JsonProperty("site_detail_url")]
         public string SiteDetailUrl { get; set; }
 
@@ -57,10 +54,5 @@ namespace ComicVine.Models
 
         [JsonProperty("volumes")]
         public List<Volume> Volumes { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }

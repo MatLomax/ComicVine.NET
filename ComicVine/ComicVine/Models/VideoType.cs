@@ -2,8 +2,12 @@
 
 namespace ComicVine.Models
 {
-    public class VideoType
+    public class VideoType : NamedEntity
     {
+        public new static string SingleEndpoint => "video_type";
+        public new static string ListEndpoint => "video_types";
+        public new static string EndpointId => "";
+
         [JsonProperty("api_detail_url")]
         public string ApiDetailUrl { get; set; }
 
@@ -12,16 +16,5 @@ namespace ComicVine.Models
 
         [JsonProperty("deck")]
         public string Deck { get; set; }
-
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }

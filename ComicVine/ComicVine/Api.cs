@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using ComicVine.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 
 namespace ComicVine
@@ -16,7 +20,7 @@ namespace ComicVine
             this.Client.FollowRedirects = true;
             this.Client.BaseUrl = new Uri(ApiAddress);
         }
-        
+
         protected IRestRequest CreateRequest(string uri, Filters filters)
         {
             var request = new RestRequest(uri) { Method = Method.GET };
@@ -31,22 +35,38 @@ namespace ComicVine
         {
             var response = this.Client.Execute(request);
 
-            var simpleResult = JsonConvert.DeserializeObject<SimpleResult>(response.Content);
+            var json = JObject.Parse(response.Content);
 
-            if (simpleResult.Error != "OK") return default(T);
+            if (json["error"].Value<string>() != "OK") return default(T);
 
-            var result = JsonConvert.DeserializeObject<Result<T>>(response.Content);
+            // Fix for occasional death date appearing as time object with timezone d
+            try
+            {
+                var deathDateObject = json["results"]?["death"]?.ToObject<DateObject>();
+                if (deathDateObject?.Date != null)
+                {
+                    json["results"]["death"] = deathDateObject.Date;
+                }
+            }
+            catch (Exception)
+            {
+                // Ignored
+            }
+
+
+            var result = JsonConvert.DeserializeObject<Result<T>>(json.ToString());
 
             return result.Results;
         }
-        public T Get<T>(string endpoint, Filters filters)
+
+        protected List<T> FetchList<T>(string endpoint, Filters filters)
         {
             var request = this.CreateRequest(endpoint, filters);
 
-            return this.GetResponse<T>(request);
+            return this.GetResponse<List<T>>(request);
         }
 
-        public T Get<T>(string endpoint, int id, Filters filters)
+        protected T FetchSingle<T>(string endpoint, int id, Filters filters)
         {
             var idString = this.EndpointIds[endpoint] != "" ? $"{this.EndpointIds[endpoint]}-{{id}}" : id.ToString();
             var request = this.CreateRequest($"{endpoint}/{idString}", filters);
@@ -55,6 +75,78 @@ namespace ComicVine
             return this.GetResponse<T>(request);
         }
 
+        protected T FetchSingle<T>(string endpoint, int id, Filters filters, IEnumerable<string> inflateWith) where T : Entity
+        {
+            var entity = this.FetchSingle<T>(endpoint, id, filters);
+
+            if (inflateWith == null) return entity;
+
+            var singles = entity.GetType().GetProperties().Where(p => inflateWith.Contains(p.Name) && PropertyIsEntity(p)).ToList();
+            singles.ForEach(s =>
+            {
+                var type = this.GetType();
+                var method = type.GetMethod("GetEntity");
+                var genMethod = method.MakeGenericMethod(s.PropertyType);
+                var p = genMethod.Invoke(this, new[] { s.GetValue(entity), filters });
+                s.SetValue(entity, p);
+            });
+
+            //var singlesUpdated = singles.Select(s => this.Get((Entity)s.GetValue(entity), int.Parse(entity.Id), null).ChangeType(s.PropertyType)).ToList();
+
+
+            //var c = entity.GetType().GetProperties().Where(p => p.PropertyType.Name == "List`1" && p.PropertyType.GenericTypeArguments.First()?.BaseType?.FullName == typeof(Entity).FullName).ToList();
+            //var d = c.Where(l => l.PropertyType.GenericTypeArguments.First().Name == "Power").Select(l => l.GetValue(entity)).ToList();
+
+            return entity;
+        }
+
+        public T GetEntity<T>(T entity, Filters filters) where T : Entity
+        {
+            var endpoint = entity.GetType().GetProperty("SingleEndpoint").GetValue(entity).ToString();
+            return this.FetchSingle<T>(endpoint, int.Parse(entity.Id), filters);
+        }
+
+
+        public T Get<T>(string name, Filters filters = null, IEnumerable<string> inflateWith = null) where T : NamedEntity
+        {
+            var entities = this.Get<T>(new Filters
+            {
+                Filter = $"name:{name}",
+                FieldList = "id,name"
+            }).ToList();
+
+            var entity = entities.FirstOrDefault(e => e.Name == name) ?? entities.First();
+            return this.Get<T>(int.Parse(entity.Id), filters, inflateWith);
+
+        }
+
+        public T Get<T>(int id, Filters filters = null, IEnumerable<string> inflateWith = null) where T : Entity
+        {
+            var endpoint = typeof(T).GetProperty("SingleEndpoint").GetValue(null).ToString();
+            return this.FetchSingle<T>(endpoint, id, filters, inflateWith);
+        }
+
+        public IEnumerable<T> Get<T>(Filters filters = null) where T : Entity
+        {
+            var endpoint = typeof(T).GetProperty("ListEndpoint").GetValue(null).ToString();
+            return this.FetchList<T>(endpoint, filters);
+        }
+
+
+        protected static bool PropertyIsEntity(PropertyInfo prop)
+        {
+            var type = prop.PropertyType.BaseType;
+
+            while (type?.BaseType != null)
+            {
+                type = type.BaseType;
+
+                if (type == typeof (Entity)) return true;
+            }
+
+            return false;
+        }
+        
 
         protected static IRestRequest ApplyFilters(IRestRequest request, Filters filters)
         {

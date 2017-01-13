@@ -4,8 +4,12 @@ using Newtonsoft.Json;
 
 namespace ComicVine.Models
 {
-    public class Team
+    public class Team : NamedEntity
     {
+        public new static string SingleEndpoint => "team";
+        public new static string ListEndpoint => "teams";
+        public new static string EndpointId => "4060";
+
         [JsonProperty("aliases")]
         public string Aliases { get; set; }
 
@@ -45,9 +49,6 @@ namespace ComicVine.Models
         [JsonProperty("first_appeared_in_issue")]
         public Issue FirstAppearedInIssue { get; set; }
 
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
         [JsonProperty("image")]
         public Image Image { get; set; }
 
@@ -60,9 +61,6 @@ namespace ComicVine.Models
         [JsonProperty("movies")]
         public List<Movie> Movies { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
         [JsonProperty("publisher")]
         public Publisher Publisher { get; set; }
 
@@ -74,10 +72,5 @@ namespace ComicVine.Models
 
         [JsonProperty("volume_credits")]
         public List<Volume> VolumeCredits { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }

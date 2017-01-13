@@ -4,8 +4,12 @@ using Newtonsoft.Json;
 
 namespace ComicVine.Models
 {
-    public class Episode
+    public class Episode : NamedEntity
     {
+        public new static string SingleEndpoint => "episode";
+        public new static string ListEndpoint => "episodes";
+        public new static string EndpointId => "4070";
+
         [JsonProperty("air_date")]
         public DateTime? AirDate { get; set; }
 
@@ -60,17 +64,11 @@ namespace ComicVine.Models
         [JsonProperty("has_staff_review")]
         public bool HasStaffReview { get; set; }
 
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
         [JsonProperty("image")]
         public Image Image { get; set; }
 
         [JsonProperty("location_credits")]
         public List<Location> LocationCredits { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
 
         [JsonProperty("object_credits")]
         public List<Object> ObjectCredits { get; set; }
@@ -86,10 +84,5 @@ namespace ComicVine.Models
 
         [JsonProperty("team_credits")]
         public List<Team> TeamCredits { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }

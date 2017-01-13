@@ -3,8 +3,12 @@ using Newtonsoft.Json;
 
 namespace ComicVine.Models
 {
-    public class Promo
+    public class Promo : NamedEntity
     {
+        public new static string SingleEndpoint => "promo";
+        public new static string ListEndpoint => "promos";
+        public new static string EndpointId => "1700";
+
         [JsonProperty("api_detail_url")]
         public string ApiDetailUrl { get; set; }
 
@@ -14,27 +18,16 @@ namespace ComicVine.Models
         [JsonProperty("deck")]
         public string Deck { get; set; }
 
-        [JsonProperty("Id")]
-        public int Id { get; set; }
-
         [JsonProperty("image")]
         public Image Image { get; set; }
 
         [JsonProperty("link")]
         public string Link { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
         [JsonProperty("resource_type")]
         public string ResourceType { get; set; }
 
         [JsonProperty("user")]
         public string User { get; set; }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }
